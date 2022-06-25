@@ -1,0 +1,1 @@
+Used puppeteer-extra to assist with scraping of site having tools that prevent scraping.
