@@ -1,5 +1,6 @@
 const assert = require("chai").assert
-const { sliceThroughFirstColon, cleanData} = require("../utilities")
+const { it } = require("mocha")
+const { sliceThroughFirstColon, cleanData, scrapeMetaTrade} = require("../utilities")
 
 // Test sliceThroughFirstColon 
 describe("Testing sliceThroughFirstColon", () => {
@@ -7,6 +8,13 @@ describe("Testing sliceThroughFirstColon", () => {
     const expected = "previousDataCleared"
     it("should return 'previousDataCleared' given 'Extra: previous Data Cleared'", done => {
         assert.strictEqual(sliceThroughFirstColon(original), expected)
+        done()
+    })
+
+    const testData2 = 'No colon here'
+
+    it(`should return '' given '${testData2}' `, done => {
+        assert.strictEqual(sliceThroughFirstColon(testData2), '')
         done()
     })
 })
@@ -23,4 +31,20 @@ describe("Testing cleanData function ", () => {
             `cleanData should return ${expectedCleanedRes} given ${testData}`)
         done()
     })
+})
+
+// Testing out 
+describe("Testing scrapeMetaTrade", () => {
+    it("Should return an interface like { marketTime: '23:56:59', balance: '5 050.73', equity: '5 053.56  ' } or null", function (done) {
+        scrapeMetaTrade().then(data => {
+            if(data){
+                assert.isTrue(data.hasOwnProperty('balance'))
+            } else{
+                assert.isNull(data)
+            }
+        }).then(done)
+         
+    
+    
+    }, "response should either be an object having key balance or return null").timeout(60000)
 })

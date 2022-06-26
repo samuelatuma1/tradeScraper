@@ -24,7 +24,6 @@ const sliceThroughFirstColon = (text) => {
     // slice off from beginning to index of :
     return text.slice(firstColIdx + 1).replaceAll(" ", "")
 }
-console.log('Hello: 5 053.56  '.slice(6).replaceAll(" ", "") + 'USD')
 /**
  * 
  * @param {object} dataObject :-> object to clean. Example {
@@ -63,6 +62,8 @@ console.log(cleanData({
     marketWatchText: 'Market Watch: 23:56:59',
     equityBalanceText: 'Balance: 5 050.73 USD  Equity: 5 053.56  Margin: 6.92  Free margin: 5 046.64  Margin level: 73 066.34%' 
   }))
+
+
 
 /**
  * @desc logs in every 5 minutes and scrapes the Equity, Balance and Market Watch Time
@@ -117,11 +118,8 @@ async function scrapeMetaTrade() {
 
         // Clean data, return necessary from given result
         // Return clean Data if valid result, else, null
-        console.log({marketWatchText, equityBalanceText})
         const cleaned = cleanData({marketWatchText, equityBalanceText})
-        console.log('Done')
-        console.log(cleaned)
-
+        
         // Close puppeteer
         chrome.close()
         return cleaned ? cleaned : null
@@ -133,7 +131,8 @@ async function scrapeMetaTrade() {
 }
 
 // scrapeMetaTrade()
+// scrapeMetaTrade().then(d => console.log('returned data => ', d))
 // setInterval(() => {scrapeMetaTrade()}, 300000)
 module.exports = {
-    sliceThroughFirstColon, cleanData
+    sliceThroughFirstColon, cleanData, scrapeMetaTrade
 }
