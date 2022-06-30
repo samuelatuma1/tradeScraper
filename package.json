@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "dev": "nodemon utilities.js"
+    "dev": "nodemon utilities.js",
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -18,10 +19,12 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^10.0.0",
+    "mongoose": "^6.4.0",
     "puppeteer": "^15.1.0",
     "puppeteer-extra": "^3.3.0",
     "puppeteer-extra-plugin-adblocker": "^2.13.0",
-    "puppeteer-extra-plugin-stealth": "^2.10.1"
+    "puppeteer-extra-plugin-stealth": "^2.10.1",
+    "socket.io": "^4.5.1"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",

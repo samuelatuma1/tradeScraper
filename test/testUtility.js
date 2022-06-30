@@ -3,7 +3,7 @@ const { it } = require("mocha")
 const { sliceThroughFirstColon, cleanData, scrapeMetaTrade} = require("../utilities")
 
 // Test sliceThroughFirstColon 
-describe("Testing sliceThroughFirstColon", () => {
+describe("Testing sliceThroughFirstColon", function (){
     const original = 'Extra: previous Data Cleared'
     const expected = "previousDataCleared"
     it("should return 'previousDataCleared' given 'Extra: previous Data Cleared'", done => {
@@ -19,13 +19,15 @@ describe("Testing sliceThroughFirstColon", () => {
     })
 })
 
-describe("Testing cleanData function ", () => {
+// Testing cleanData function
+// { marketTime: '12:07:06', balance: '5 050.73', equity: '5 053.13  ' }
+describe("Testing cleanData function ", function(){
     const testData = {
         marketWatchText: 'Market Watch: 23:56:59',
         equityBalanceText: 'Balance: 5 050.73 USD  Equity: 5 050.73  Free margin: 5 050.73'   
       }
     const expectedCleanedRes = { marketTime: '23:56:59', balance: '5050.73', equity: '5050.73' }
-    it("should return { marketTime: '23:56:59', balance: '5050.73', equity: '5050.73' }", done => {
+    it("should return something like { marketTime: '23:56:59', balance: '5050.73', equity: '5050.73' }", done => {
         assert.deepEqual(
             cleanData(testData), expectedCleanedRes, 
             `cleanData should return ${expectedCleanedRes} given ${testData}`)
@@ -33,8 +35,8 @@ describe("Testing cleanData function ", () => {
     })
 })
 
-// Testing out 
-describe("Testing scrapeMetaTrade", () => {
+// Testing out scrapeMetaTrade
+describe("Testing scrapeMetaTrade", function(){
     it("Should return an interface like { marketTime: '23:56:59', balance: '5 050.73', equity: '5 053.56  ' } or null", function (done) {
         scrapeMetaTrade().then(data => {
             if(data){
@@ -46,5 +48,5 @@ describe("Testing scrapeMetaTrade", () => {
          
     
     
-    }, "response should either be an object having key balance or return null").timeout(60000)
+    }, "response should either be an object having key -> balance or return null").timeout(60000)
 })

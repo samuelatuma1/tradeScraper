@@ -11,8 +11,13 @@ puppeteer.use(StealthPlugin())
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }))
 
+
+
+
+
+
 /**
- * @desc Slice out data from beginning to first : , removes white space
+ * @desc Slice out data from beginning to first :(colon) , removes white space
  * @param {String} text 
  * @returns {String} :-> Returns strippped string
  */
@@ -24,13 +29,16 @@ const sliceThroughFirstColon = (text) => {
     // slice off from beginning to index of :
     return text.slice(firstColIdx + 1).replaceAll(" ", "")
 }
+
+
+
 /**
  * 
  * @param {object} dataObject :-> object to clean. Example {
         marketWatchText: 'Market Watch: 23:56:59',
         equityBalanceText: 'Balance: 5 050.73 USD  Equity: 5 053.56  Margin: 6.92  Free margin: 5 046.64  Margin level: 73 066.34%'
     }
- * @returns {object | null} 
+ * @returns {object | null} cleaned Data example { marketTime: '23:56:59', balance: '5050.73', equity: '5053.56' }
  */
 function cleanData(dataObject){
     try{
@@ -57,26 +65,22 @@ function cleanData(dataObject){
     }
 }
 
-//
-console.log(cleanData({
-    marketWatchText: 'Market Watch: 23:56:59',
-    equityBalanceText: 'Balance: 5 050.73 USD  Equity: 5 053.56  Margin: 6.92  Free margin: 5 046.64  Margin level: 73 066.34%' 
-  }))
 
 
 
 /**
- * @desc logs in every 5 minutes and scrapes the Equity, Balance and Market Watch Time
- * @returns interface like -> { marketTime: '23:56:59', balance: '5 050.73', equity: '5 053.56  ' } or null if there happens to be an error
+ * @desc scrapes metatrade website for Equity, Balance and Market Watch Time
+ * @returns {Promise} that resolves to interface like -> { marketTime: '23:56:59', balance: '5 050.73', equity: '5 053.56  ' } or null if there happens to be an error
  */
 async function scrapeMetaTrade() {
     try{
         // Set up puppeteer-extra
-        const chrome = await puppeteer.launch({headless : false})
+        // const chrome = await puppeteer.launch({headless : false})
+        const chrome = await puppeteer.launch()
         const page = await chrome.newPage()
         await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4298.0 Safari/537.36');
 
-        await page.goto("https://trade.mql5.com/trade?servers=", {waitUntil: 'networkidle2' })
+        await page.goto("https://trade.mql5.com/trade?servers=", {waitUntil: 'networkidle2', timeout: 60000 })
         
         // Wait for Page Load
         await page.waitForSelector('#login')
@@ -121,7 +125,7 @@ async function scrapeMetaTrade() {
         const cleaned = cleanData({marketWatchText, equityBalanceText})
         
         // Close puppeteer
-        chrome.close()
+        await chrome.close()
         return cleaned ? cleaned : null
 
     } catch(err){
@@ -130,7 +134,7 @@ async function scrapeMetaTrade() {
     }
 }
 
-// scrapeMetaTrade()
+
 // scrapeMetaTrade().then(d => console.log('returned data => ', d))
 // setInterval(() => {scrapeMetaTrade()}, 300000)
 module.exports = {
