@@ -73,6 +73,7 @@ async function scrapeMetaTrade() {
     try{
         // Set up puppeteer-extra
         // const chrome = await puppeteer.launch({headless : false})
+        // Attempt to support puppeteer on heroku
         const chrome = await puppeteer.launch({
             headless: true,
             args: ['--no-sandbox','--disable-setuid-sandbox']
