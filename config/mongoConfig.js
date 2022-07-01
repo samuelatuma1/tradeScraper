@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 
-require("dotenv").config()
+// require("dotenv").config()
 // const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.mongoDBUsername}:${process.env.mongoDBPassword}@cluster0.k7wdg.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://atuma:mystrongpassword@cluster0.k7wdg.mongodb.net/?retryWrites=true&w=majority`;
 
 const uri2 = ("mongodb://127.0.0.1:27017/ScraperDB")
 /**

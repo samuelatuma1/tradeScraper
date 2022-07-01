@@ -1,4 +1,3 @@
-const mongoose = require("mongoose")
 
 const mongoDB = require("./config/mongoConfig.js")
 mongoDB()
@@ -8,7 +7,7 @@ const http = require("http")
 const {Server} = require("socket.io")
 
 // use env
-require("dotenv").config()
+// require("dotenv").config()
 
 // Set up express server
 const express = require("express")
