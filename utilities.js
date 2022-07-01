@@ -80,7 +80,7 @@ async function scrapeMetaTrade() {
         await page.goto("https://trade.mql5.com/trade?servers=", {waitUntil: 'networkidle2', timeout: 120000 })
         
         // Wait for Page Load
-        await page.waitForSelector('#login')
+        await page.waitForSelector('#login', {timeout: 120000})
         
         // Fill out form with log in details
         const loginInput = "66337396"
