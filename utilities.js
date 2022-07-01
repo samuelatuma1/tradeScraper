@@ -73,7 +73,10 @@ async function scrapeMetaTrade() {
     try{
         // Set up puppeteer-extra
         // const chrome = await puppeteer.launch({headless : false})
-        const chrome = await puppeteer.launch()
+        const chrome = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox','--disable-setuid-sandbox']
+        })
         const page = await chrome.newPage()
         await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4298.0 Safari/537.36');
 
