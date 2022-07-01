@@ -32,7 +32,7 @@ const io = new Server(server, {
 
 
 // Require Scrape
-const {scrapeAndStoreTrade, retrieveAll} = require("./controller/tradeController.js")
+const {scrapeAndStoreTrade, retrieveAll, last30Trades} = require("./controller/tradeController.js")
 
 let updatedTradeData = [];
 
@@ -42,14 +42,16 @@ async function updateTradeData(){
     // If scrapeRes, update updatedTradeData to reflect changes
     if(scrapeRes){
         console.log("Scrape successful")
-        updatedTradeData = scrapeRes
-        emitChange()
+        // updatedTradeData = scrapeRes
+        io.emit("new data", JSON.stringify(scrapeRes))
+        // emitChange()
     }
 }
 
-function emitChange(){
+async function emitChange(){
     console.log("emitting new data")
     // Send Updated Data
+    const updatedTradeData = await last30Trades()
     io.emit("new data", JSON.stringify(updatedTradeData))
 }
 

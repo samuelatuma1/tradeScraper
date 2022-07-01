@@ -36,4 +36,8 @@ async function retrieveAll(){
     const allData = await TradeModel.where().sort({_id: -1}).select("-__v")
     return allData
 }
-module.exports = {scrapeAndStoreTrade, retrieveAll}
+
+async function last30Trades(){
+    return await TradeModel.findLastN(30)
+}
+module.exports = {scrapeAndStoreTrade, retrieveAll, last30Trades}
