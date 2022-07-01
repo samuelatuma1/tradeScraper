@@ -13,9 +13,6 @@ puppeteer.use(AdblockerPlugin({ blockTrackers: true }))
 
 
 
-
-
-
 /**
  * @desc Slice out data from beginning to first :(colon) , removes white space
  * @param {String} text 
